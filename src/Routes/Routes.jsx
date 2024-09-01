@@ -1,11 +1,9 @@
-import {
-    createBrowserRouter,
-  } from "react-router-dom";
-import Sidebar from "../Layout/Sidebar";
+import {createBrowserRouter,} from "react-router-dom";
 import Signin from "../Pages/Signin";
 import Signup from "../Pages/Signup";
 import DashBoard from "../Layout/DashBoard";
 import AddData from "../Pages/AddData";
+import Home from "../Home/Home";
 
   export const router = createBrowserRouter([
     {
@@ -13,21 +11,22 @@ import AddData from "../Pages/AddData";
       element: <DashBoard></DashBoard>,
       children: [
         {
-            path: "/",
-            element : <Sidebar></Sidebar>
+          path: "/",
+          element: <Home></Home>
         },
+
+        {
+          path: "/login",
+          element : <Signin></Signin>
+      },
+      {
+          path: "/signup",
+          element : <Signup/>
+      },
+      {
+        path: '/add',
+        element : <AddData></AddData>
+      }
       ]
     },
-    {
-        path: "/login",
-        element : <Signin></Signin>
-    },
-    {
-        path: "/signup",
-        element : <Signup/>
-    },
-    {
-      path: '/add',
-      element : <AddData></AddData>
-    }
   ]);
