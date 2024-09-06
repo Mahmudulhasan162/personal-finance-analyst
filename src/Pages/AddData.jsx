@@ -1,7 +1,11 @@
+import { useUser } from "@clerk/clerk-react";
 import { useState } from "react";
 
 const AddData = () => {
+    const {user} = useUser();
+
     const [formData, setFormData] = useState({
+        email :  user?.primaryEmailAddress?.emailAddress,
         incomes: [{ source: "", amount: "", frequency: "One-time", date: "" }],
         expenses: [{ category: "", amount: "", date: "", paymentMethod: "", recurrence: "One-time" }],
         savings: [{ goal: "", amount: "", frequency: "One-time", account: "" }],
@@ -18,6 +22,8 @@ const AddData = () => {
         );
         setFormData({ ...formData, [category]: updatedCategory });
     };
+    
+    
 
     const addField = (category) => {
         const newItem = category === 'incomes' ? { source: "", amount: "", frequency: "One-time", date: "" } :
@@ -48,6 +54,7 @@ const AddData = () => {
             if (response.ok) {
                 alert('Data added successfully!');
                 setFormData({
+                    email : formData.email, 
                     incomes: [{ source: "", amount: "", frequency: "One-time", date: "" }],
                     expenses: [{ category: "", amount: "", date: "", paymentMethod: "", recurrence: "One-time" }],
                     savings: [{ goal: "", amount: "", frequency: "One-time", account: "" }],
@@ -67,11 +74,22 @@ const AddData = () => {
 
     return (
         <form onSubmit={handleSubmit} className="max-w-md mx-auto">
-            <h2 className="text-xl font-semibold mb-4">Add Financial Data</h2>
+            <h2 className="text-xl font-semibold mb-4 text-white">Add Financial Data</h2>
+
+              {/* Email Section */}
+              <div className="mb-4">
+                <h3 className="text-lg font-semibold text-white">Email</h3>
+                <input
+                    type="email"
+                    value={formData.email}
+                    readOnly
+                    className="w-full px-3 py-2 border rounded-lg bg-gray-200"
+                />
+            </div>
 
             {/* Income Section */}
             <div className="mb-4">
-                <h3 className="text-lg font-semibold">Incomes</h3>
+                <h3 className="text-lg font-semibold text-white">Incomes</h3>
                 {formData.incomes.map((income, index) => (
                     <div key={index} className="mb-4">
                         <input
@@ -116,7 +134,7 @@ const AddData = () => {
 
             {/* Expenses Section */}
             <div className="mb-4">
-                <h3 className="text-lg font-semibold">Expenses</h3>
+                <h3 className="text-lg font-semibold text-white">Expenses</h3>
                 {formData.expenses.map((expense, index) => (
                     <div key={index} className="mb-4">
                         <input
@@ -171,7 +189,7 @@ const AddData = () => {
 
             {/* Savings Section */}
             <div className="mb-4">
-                <h3 className="text-lg font-semibold">Savings</h3>
+                <h3 className="text-lg font-semibold text-white">Savings</h3>
                 {formData.savings.map((saving, index) => (
                     <div key={index} className="mb-4">
                         <input
@@ -216,7 +234,7 @@ const AddData = () => {
 
             {/* Debts Section */}
             <div className="mb-4">
-                <h3 className="text-lg font-semibold">Debts</h3>
+                <h3 className="text-lg font-semibold text-white">Debts</h3>
                 {formData.debts.map((debt, index) => (
                     <div key={index} className="mb-4">
                         <input
@@ -264,7 +282,7 @@ const AddData = () => {
 
             {/* Investments Section */}
             <div className="mb-4">
-                <h3 className="text-lg font-semibold">Investments</h3>
+                <h3 className="text-lg font-semibold text-white">Investments</h3>
                 {formData.investments.map((investment, index) => (
                     <div key={index} className="mb-4">
                         <input
@@ -304,7 +322,7 @@ const AddData = () => {
 
             {/* Recurring Payments Section */}
             <div className="mb-4">
-                <h3 className="text-lg font-semibold">Recurring Payments</h3>
+                <h3 className="text-lg font-semibold text-white">Recurring Payments</h3>
                 {formData.recurringPayments.map((recurringPayment, index) => (
                     <div key={index} className="mb-4">
                         <input
@@ -330,7 +348,7 @@ const AddData = () => {
 
             {/* Budget Section */}
             <div className="mb-4">
-                <h3 className="text-lg font-semibold">Budget</h3>
+                <h3 className="text-lg font-semibold text-white">Budget</h3>
                 {formData.budget.map((budgetItem, index) => (
                     <div key={index} className="mb-4">
                         <input
@@ -356,7 +374,7 @@ const AddData = () => {
 
             {/* Financial Goals Section */}
             <div className="mb-4">
-                <h3 className="text-lg font-semibold">Financial Goals</h3>
+                <h3 className="text-lg font-semibold text-white">Financial Goals</h3>
                 {formData.financialGoals.map((goal, index) => (
                     <div key={index} className="mb-4">
                         <input
@@ -385,6 +403,7 @@ const AddData = () => {
             </button>
         </form>
     );
+    
 };
 
 export default AddData;
